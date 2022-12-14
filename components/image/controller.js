@@ -17,14 +17,31 @@ exports.getImages = async () =>{
 
 // lay hinh anh theo id
 
-exports.getImagesById = async () =>{
-    let img = await imageService.getById(id);
-    img = {
-        _id :img._id,
-        image : img.image,
-        product_id : img.product_id
-    }
-    return img;
+exports.getImagesById = async (id) =>{
+        let data = await imageService.getById(id);
+        data = data.map(item => {
+            item = {
+                _id : item._id,
+                image : item.image,
+                product_id : item.product_id
+            }
+            return item;
+        })
+        return data;
+}
+
+exports.getImagesById1 = async (id) =>{
+    let data = await imageService.getById(id);
+    data = data.map(item => {
+        item = {
+            _id : item._id,
+            image : item.image,
+            product_id : item.product_id
+        }
+        return item;
+    })
+    return data;
+    
 }
 
 exports.insert_image = async (body) =>{

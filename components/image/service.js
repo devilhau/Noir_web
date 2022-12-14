@@ -7,8 +7,13 @@ exports.getImages = async () =>{
 
 
 exports.getById = async (id) =>{
-    const image = await imageModel.findById(id).populate('product_id');
+    const image = await imageModel.find({product_id: id}).populate('product_id');
     return image;
+}
+
+exports.getById1 = async (id) =>{
+    const image = await imageModel.find({product_id: id});
+    return image[0];
 }
 
 // add 1 image 

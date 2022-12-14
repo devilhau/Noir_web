@@ -1,4 +1,6 @@
 
+const async = require('hbs/lib/async');
+const { options } = require('../../routes/image');
 const productModel = require('./model');
 
 /**
@@ -13,6 +15,12 @@ exports.getProducts = async () =>{
     //return data;
 }
 
+exports.search = async (name) => {
+  var check = RegExp(name, "i");
+    const products = productModel.find({name: check }).populate('category_id').exec();
+    return products;
+
+}
 
 /**
  * lấy thông tin 1 sp

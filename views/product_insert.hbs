@@ -1,4 +1,4 @@
-<form role="form" method="post" action="/product" enctype="form-data">
+<form role="form" method="post" action="/product" enctype="multipart/form-data">
     <div class="w-full p-6 mx-auto">
         <div class="w-full max-w-full px-3 shrink-0 md:w-10/12 md:flex-0">
             <div
@@ -75,6 +75,14 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                            <div class="mb-4">
+                                <label for="email"
+                                    class="inline-block mb-2 ml-1 font-bold text-size-xs text-slate-700 dark:text-white/80">Image</label>
+                                <input type="file" id="image-file" onchange="onChangeFile()" name="image">
+                                <img id="image-view" width="300" height="300" src="" style="display: none;" />
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -82,3 +90,14 @@
         </div>
     </div>
 </form>
+<script>
+    const onChangeFile = () => {
+        const file = document.getElementById('image-file').files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('image-view').src = e.target.result;
+            document.getElementById('image-view').style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+</script>

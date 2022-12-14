@@ -13,8 +13,9 @@ router.get('/', function(req, res, next) {
 module.exports = router;
 
 /* GET login page. */
-router.get('/login', [authentication.checkLogin], function(req, res, next) {
-  res.render('login', {layout: false });
+router.get('/login', [], function(req, res, next) {
+  console.log("Thấy dòng này là không sai login nhưng vẫn quay lại login");
+  res.render('login', {layout: false});
 
 });
 
@@ -26,12 +27,14 @@ router.post('/login', async function (req, res, next) {
   const result = await userController.login(username, password);
   // nếu đúng: chuyển qua trang sản phẩm
   if (result) {
-    const token = jwt.sign({ _id: result._id, username: result.username }, 'myKey');
-    req.session.token = token;
+    const token = jwt.sign({_id: result._id, username: result.username}, 'mykey');
+    req.session = token;
+    console.log("Session:", req.body);
     res.redirect('/category');
   }
   // nếu sai: vẫn ở trang login
   else {
+    console.log("Thấy dòng này là sai login");
     res.redirect('/login');
   }
 });
@@ -42,7 +45,7 @@ module.exports = router;
 
 //test router
 router.get('/1', function(req, res, next) {
-  res.render('product_insert');
+  res.render('order_detail');
 });
 
 module.exports = router;
@@ -56,7 +59,7 @@ module.exports = router;
 
 //test router
 router.get('/3', function(req, res, next) {
-  res.render('orders');
+  res.render('image_insert');
 });
 
 module.exports = router;

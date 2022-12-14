@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 exports.checkLogin = function(req, res, next){
-    const { session} = req;
+    const {session} = req;
     const url = req.originalUrl.toLowerCase();
 
 

@@ -6,9 +6,10 @@ const userSchema = new Schema({
     id: { type: ObjectId },
     username: { type: String, required: true },
     password: { type: String },
-    phone_number: { type: String},
-    name: { type: String},
-    address: { type: String},
+    name: { type: String , required: true},
+    phone_number: { type: String , required: true},
+ 
+    address: { type: String , required: true},
     roles: {type: String}
 });
 

@@ -3,12 +3,12 @@ const async = require('hbs/lib/async');
 var router = express.Router();
 
 const categoryController = require('../components/categories/controller');
-
+const authentication = require('../middle/authentication');
 /**
  * page: category
  * http://localhost:3000/category
  * method: get
- * detail: get list categorys
+ * detail: get list categories
  */
  router.get('/', [], async function (req, res, next) {
 
@@ -22,7 +22,7 @@ const categoryController = require('../components/categories/controller');
 * page: category
 * http://localhost:3000/category
 * method: post
-* detail: insert new categorys
+* detail: insert new categories
 */
 router.post('/', [],  async function (req, res, next) {
 
@@ -41,7 +41,7 @@ router.post('/', [],  async function (req, res, next) {
  * method: get
  * detail:get one category
  */
-router.get('/:id/edit', async function (req, res, next) {
+router.get('/:id/edit', [], async function (req, res, next) {
   // lấy 1 danh muc
   const { id } = req.params;
   const category = await categoryController.getById(id);

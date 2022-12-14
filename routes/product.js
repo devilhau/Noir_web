@@ -6,6 +6,7 @@ const productController = require('../components/products/controller');
 const categoryController = require('../components/categories/controller');
 const imageController = require('../components/image/controller');
 const upload = require('../middle/upload');
+const authentication = require('../middle/authentication');
 
 
 /**
@@ -19,7 +20,8 @@ router.get('/', [], async function (req, res, next) {
   // lấy danh sách sản phẩm
   const data = await productController.getProducts();
   console.log(data)
-  res.render('products', { products: data });
+
+  res.render('products',  {products: data} );
 });
 
 /**
@@ -28,10 +30,16 @@ router.get('/', [], async function (req, res, next) {
 * method: post
 * detail: insert new products
 */
-router.post('/', [], async function (req, res, next) {
+router.post('/', [upload.single('image'),], async function (req, res, next) {
 
   // xử lý thêm mới sản phẩm
-  let { body} = req;
+  let { body, file} = req;
+  let image = '';
+  if (file) {
+    image = `http://192.168.1.5:3000/images/${file.filename}`
+    body = { ...body, image }
+    console.log("image", body);
+  }
   await productController.insert(body);
 
   res.redirect('/product');
@@ -61,6 +69,7 @@ router.get('/:id/edit', [], async function (req, res, next) {
   // lấy 1 sản phẩm
   const { id } = req.params;
   const product = await productController.getById(id);
+  console.log("1 product", product)
   //lấy danh mục 1 sp
   const categories = await categoryController.getCategories();
 
@@ -73,9 +82,15 @@ router.get('/:id/edit', [], async function (req, res, next) {
  * method: post
  * detail:update one product
  */
-router.post('/:id/edit', [], async function (req, res, next) {
+router.post('/:id/edit', [upload.single('image'),], async function (req, res, next) {
   // cập nhật 1 sản phẩm
-  let { params, body } = req;
+  let { params, body, file } = req;
+  let image = '';
+  delete body.image;
+  if (file) {
+    image = `http://192.168.1.5:3000/images/${file.filename}`
+    body = { ...body, image }
+  }
   await productController.update(params.id, body);
 
   res.redirect('/product');

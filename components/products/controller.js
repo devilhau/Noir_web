@@ -17,7 +17,8 @@
              price: item.price,
              description: item.description,
              available: item.available,
-             category_id: item.category_id
+             category_id: item.category_id,
+             image: item.image,
          }
          return item;
      })
@@ -33,10 +34,11 @@
             _id: product._id,
             name: product.name,
             price: product.price,
-            // image: product.image,
+            image: product.image,
             description: product.description,
             available: product.available, 
-            category_id: product.category_id
+            category_id: product.category_id,
+
          }
      return product;
     }
@@ -44,6 +46,24 @@
         console.log('error',error);
         return null;
     }
+}
+
+exports.search = async (name) =>{
+    let data = await productService.search(name);
+    data= data.map(item =>{
+        item = {
+           date: date.format(item.date),
+            _id: item._id,
+            name: item.name,
+            price: item.price,
+            description: item.description,
+            available: item.available,
+            category_id: item.category_id,
+            image: item.image,
+        }
+        return item;
+    })
+    return data;
 }
  
  

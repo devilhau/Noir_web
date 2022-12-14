@@ -4,8 +4,7 @@ const ObjectId = Schema.ObjectId;
 
 const cartSchema = new Schema({
     id: { type: ObjectId },
-    total: { type: String },
-    user_id: { type: Schema.Types.ObjectId, ref: 'user' }
+    user_id: { type:  Schema.Types.ObjectId, ref: 'user' }
 
 });
 
